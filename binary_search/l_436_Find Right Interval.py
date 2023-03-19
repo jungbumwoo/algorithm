@@ -19,8 +19,9 @@ class Solution:
         for i in range(len(intervals)):
             data.append([intervals[i][0], intervals[i][1], i])
         data.sort()
+        print(intervals)
+        print(data)
         ans = []
-
         for j in range(len(intervals)):
             target = intervals[j][1]
             start, end = 0, len(data) - 1
@@ -29,15 +30,15 @@ class Solution:
                 mid = (start + end) // 2
                 if data[mid][0] >= target:
                     end = mid - 1
+                    res_idx = min(res_idx, mid)
                 else:
-                    start = mid + 1
+                    start = mid + 1        
             
             if res_idx == len(data):
                 ans.append(-1)
             else:
                 ans.append(data[res_idx][2])
         return ans
-
         
 # Test
 class TestSolution(unittest.TestCase):
