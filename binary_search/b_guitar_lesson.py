@@ -12,7 +12,7 @@ data = list(map(int, sys.stdin.readline().split()))
 
 start = max(data)
 end = sum(data)
-result = len(data)
+result = end
 
 while start <= end:
     mid = (start + end) // 2
@@ -35,7 +35,6 @@ while start <= end:
     else:
         start = mid + 1
     
-
-print(mid)
+print(result)
 
 
