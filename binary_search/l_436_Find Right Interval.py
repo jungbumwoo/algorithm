@@ -3,16 +3,13 @@ from typing import List, Optional, Tuple
 import unittest
 
 
-# Link
+# https://leetcode.com/problems/find-right-interval
 
-'''
-description
-'''
 
 class Solution:
     def solve(self, intervals: List[List[int]]) -> List[int]:
-        # Time Complexity :  
-        # Space Complexity : 
+        # Time Complexity : N x log N
+        # Space Complexity : N
         if len(intervals) == 1:
             return [-1]
         data = []
