@@ -11,7 +11,7 @@ description
 from collections import deque 
 
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
+    def solve(self, grid: List[List[str]]) -> int:
         cnt = 0
         dx = [0, 0, -1, 1]
         dy = [1, -1, 0, 0]
@@ -45,7 +45,7 @@ class TestSolution(unittest.TestCase):
     def test_solution(self):
         @dataclass
         class Args:
-            nums: List[int]
+            grid: List[List[str]]
 
         @dataclass
         class TestCase:
@@ -56,19 +56,29 @@ class TestSolution(unittest.TestCase):
         cases = [
             TestCase(
                 name="test 1",
-                input=Args(nums = [-4,-1,0,3,10]),
-                expect=[0,1,9,16,100]
+                input=Args(grid = [
+                    ["1","1","1","1","0"],
+                    ["1","1","0","1","0"],
+                    ["1","1","0","0","0"],
+                    ["0","0","0","0","0"]
+                ]),
+                expect=1
             ),
             TestCase(
                 name="test 2",
-                input=Args(nums = [-7,-3,2,3,11]),
-                expect=[4,9,9,49,121]
+                input=Args(grid = [
+                    ["1","1","0","0","0"],
+                    ["1","1","0","0","0"],
+                    ["0","0","1","0","0"],
+                    ["0","0","0","1","1"]
+                ]),
+                expect=3
             ),
         ]
 
         solution = Solution()
         for c in cases:
-            actual = solution.solve(nums=c.input.nums)
+            actual = solution.solve(grid=c.input.grid)
 
             self.assertEqual(
                 c.expect,
