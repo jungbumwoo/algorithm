@@ -16,8 +16,9 @@ class Solution:
         l, r, total = 0, 1, nums[0]
         ans = 10 ** 6
         while r <= len(nums):
-            if total < target and r < len(nums):
-                total += nums[r]
+            if total < target:
+                if r < len(nums):
+                    total += nums[r]
                 r += 1
             else:
                 ans = min(r - l, ans)
