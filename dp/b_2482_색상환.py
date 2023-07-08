@@ -1,37 +1,18 @@
 import sys
-import functools
-
-total = int(sys.stdin.readline())
-cnt = int(sys.stdin.readline())
-
-board = [None] * total
-temp = [0]
-
-span = total // cnt
-s = total / cnt
-
-print(f'span: {span}, s: {s}')
-
-if s < 2:
-    print(0)
-    sys.exit()
-
-# +1, span -1
-@functools.lru_cache(maxsize=None)
-def select(index):
-    if index >= total:
-        return 0
-    
-    if temp[0] == cnt:
-        return 1
-    
-    t = 0
-    for i in range(2, span + 1):
+input = sys.stdin.readline
+MOD = 1000000003
         
-        temp[0] += 1
-        t += select(index + i)
-        temp[0] -= 1
+N = int(input())
+K = int(input())
 
-    return t
+dp = [[0]*(N+1) for i in range(N+1)]
 
-print(select(-2))
+for i in range(N + 1):
+    dp[i][0] = 1
+    dp[i][1] = i
+
+for i in range(3, N + 1):
+    for j in range(2, int((i + 1) / 2)+1):
+        dp[i][j] = (dp[i - 1][j] + dp[i - 2][j - 1]) % MOD
+
+print((dp[N - 3][K - 1] + dp[N - 1][K]) % MOD)
