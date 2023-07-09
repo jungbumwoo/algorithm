@@ -1,0 +1,98 @@
+from dataclasses import dataclass
+from typing import List, Optional, Tuple
+from collections import deque
+import unittest
+
+
+# https://leetcode.com/problems/number-of-islands/
+
+'''
+Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), 
+return the number of islands.
+'''
+
+class Solution:
+    def solve(self, grid: List[List[str]]) -> int:
+
+        queue = deque()
+        dx = [0, 0, -1, 1]
+        dy = [1, -1, 0, 0]
+
+        def convert(p, q):
+
+            queue.append((p, q))
+
+            while q:
+                l = queue.popleft()
+                x, y = l[0], l[1]
+                print(x, y)
+                grid[x][y] = "0"
+
+                for i in range(4):
+                    nx = x + dx[i]
+                    ny = y + dy[i]
+
+                    if nx < 0 or nx >= len(grid[0]) or ny < 0 or ny >= len(grid):
+                        continue
+
+                    queue.append((nx, ny))
+
+        cnt = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+
+                if grid[i][j] == "1":
+                    convert(i, j)
+                    cnt += 1
+        
+        return cnt   
+
+        
+# Test
+class TestSolution(unittest.TestCase):
+    def test_solution(self):
+        @dataclass
+        class Args:
+            board: List[List[str]]
+
+        @dataclass
+        class TestCase:
+            name: str
+            input: Args
+            expect: int
+
+        cases = [
+            TestCase(
+                name="test 1",
+                input=Args(grid = [
+                    ["1","1","1","1","0"],
+                    ["1","1","0","1","0"],
+                    ["1","1","0","0","0"],
+                    ["0","0","0","0","0"]
+                ]),
+                expect=1),
+            TestCase(
+                name="test 2",
+                input=Args(grid = [
+                    ["1","1","0","0","0"],
+                    ["1","1","0","0","0"],
+                    ["0","0","1","0","0"],
+                    ["0","0","0","1","1"]
+                ]),
+                expect=33
+            ),
+        ]
+
+        solution = Solution()
+        for c in cases:
+            actual = solution.solve(board=c.input.board)
+
+            self.assertEqual(
+                c.expect,
+                actual,
+                f"failed test {c.name} expected {c.expect}, actual {actual}"
+            )
+
+
+if __name__ == '__main__':
+    unittest.main()
