@@ -22,17 +22,16 @@ class Solution:
 
             queue.append((p, q))
 
-            while q:
+            while queue:
                 l = queue.popleft()
                 x, y = l[0], l[1]
-                print(x, y)
                 grid[x][y] = "0"
 
                 for i in range(4):
                     nx = x + dx[i]
                     ny = y + dy[i]
 
-                    if nx < 0 or nx >= len(grid[0]) or ny < 0 or ny >= len(grid):
+                    if nx < 0 or nx >= len(grid) or ny < 0 or ny >= len(grid[0]):
                         continue
 
                     queue.append((nx, ny))
@@ -53,7 +52,7 @@ class TestSolution(unittest.TestCase):
     def test_solution(self):
         @dataclass
         class Args:
-            board: List[List[str]]
+            grid: List[List[str]]
 
         @dataclass
         class TestCase:
@@ -70,7 +69,8 @@ class TestSolution(unittest.TestCase):
                     ["1","1","0","0","0"],
                     ["0","0","0","0","0"]
                 ]),
-                expect=1),
+                expect=1
+            ),
             TestCase(
                 name="test 2",
                 input=Args(grid = [
@@ -79,13 +79,13 @@ class TestSolution(unittest.TestCase):
                     ["0","0","1","0","0"],
                     ["0","0","0","1","1"]
                 ]),
-                expect=33
+                expect=3
             ),
         ]
 
         solution = Solution()
         for c in cases:
-            actual = solution.solve(board=c.input.board)
+            actual = solution.solve(grid=c.input.grid)
 
             self.assertEqual(
                 c.expect,
