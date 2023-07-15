@@ -33,6 +33,12 @@ class Solution:
         queue = deque()
         cache = set()
         queue.append((0, 0))
+        
+        flag = 0
+        for k in range(1, n):
+            if k * k > n:
+                break
+            flag += 1
 
         while queue:
             total, cnt = queue.popleft()
@@ -42,11 +48,9 @@ class Solution:
             if total > n:
                 continue
 
-            for i in range(1, n):
+            for i in range(1, flag + 1):
                 k = i * i
-                if k > n:
-                    continue
-                
+
                 if (total + k) in cache:
                     continue
 
