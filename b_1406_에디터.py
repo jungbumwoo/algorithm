@@ -1,6 +1,6 @@
 import sys
 
-text = sys.stdin.readline()
+text = sys.stdin.readline().rstrip()
 N = int(sys.stdin.readline())
 commands = []
 
@@ -10,6 +10,20 @@ for _ in range(N):
 
 ################################################################
 
+'''
+abcd
+3
+P x
+L
+P y
+
+ab
+1
+P x
+
+'''
+
+
 class Node:
     def __init__(self, char):
         self.char = char
@@ -18,32 +32,31 @@ class Node:
         self.is_first = False
         self.is_end = False
 
-print(commands)
-
 dummy = Node('')
 dummy.is_first = True
-prev = dummy
+current = dummy
 
 for c in text:
     new_node = Node(c)
-    dummy.next = new_node
-    new_node.prev = prev
-    prev = new_node
+    current.next = new_node
+    new_node.prev = current
+    current = new_node
 
 last_dummy = Node('')
 last_dummy.is_end = True
-prev.next = last_dummy
+last_dummy.prev = current
+current.next = last_dummy
 
 ###################################
 
-cur = prev
+cur = current
 
 for command in commands:
     if command[0] == 'L':
         if cur.is_first is False:
             cur = cur.prev
     elif command[0] == 'D':
-        if cur.is_end is False:
+        if cur.next.is_end is False:
             cur = cur.next
     elif command[0] == 'B':
         if cur.is_first is True:
@@ -56,19 +69,17 @@ for command in commands:
     elif command[0] == 'P':
         insert_char = command[-1]
         new_node = Node(insert_char)
-
+        new_node.next = cur.next
+        new_node.prev = cur
+ 
         cur.next.prev = new_node
         cur.next = new_node
 
-        new_node.next = cur.next
-        new_node.prev = cur
         cur = new_node
 
 result = ''
-
 point = dummy.next
 while point.is_end is False:
-    print(point.char)
     result += point.char
     point = point.next
 
