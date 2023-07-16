@@ -54,10 +54,12 @@ result = 0
 
 while queue:
     cost, computer = heapq.heappop(queue)
-    picked.add(computer)
-    result += cost
+    if computer not in picked:
+        print(cost, computer)
+        picked.add(computer)
+        result += cost
 
-    select(computer)
+        select(computer)
 
 print(result)
 
