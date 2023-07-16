@@ -1,3 +1,5 @@
+# FIXME: timeout
+
 import sys
 
 text = sys.stdin.readline().rstrip()
