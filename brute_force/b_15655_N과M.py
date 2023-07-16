@@ -25,7 +25,7 @@ def select(k: int):
 
     for i in range(k, len(data)):
         bucket.append(data[i])
-        select(i)
+        select(i+1)
         bucket.pop()
-
 select(0)
+
