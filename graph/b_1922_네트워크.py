@@ -46,14 +46,14 @@ def select(num: int):
         depart, cost = element[0], element[1]
 
         if depart not in picked:
-            heapq.heappush(queue, (depart, cost))
+            heapq.heappush(queue, (cost, depart))
 
 picked.add(1)
 select(1)
 result = 0
 
 while queue:
-    computer, cost = heapq.heappop(queue)
+    cost, computer = heapq.heappop(queue)
     picked.add(computer)
     result += cost
 
