@@ -1,3 +1,4 @@
+# 답은 맞았는데 개선여지 있음. 공간복잡도 개선가능
 import sys
 
 '''
@@ -10,24 +11,20 @@ import sys
 
 N = int(sys.stdin.readline())
 data = list(map(int, sys.stdin.readline().split()))
-print(data)
 
 if N == 1:
     print(1)
     sys.exit(1)
 
 dp = list([[0, 0], [0, 0]] for _ in range(N))
-print(dp)
 
 dp[0][0][0], dp[0][0][1] = data[0], 1
 
 for i in range(1, N):
     temp = 0
     for j in range(i, -1, -1):
-        temp = 0
         if data[j] < data[i]:
             temp = max(temp, dp[j][0][1])
-    
     dp[i][0][0] = data[i]
     dp[i][0][1] = temp + 1
 
