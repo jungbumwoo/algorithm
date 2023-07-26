@@ -24,33 +24,31 @@ class Solution:
 
         half = total // 2
 
-        calculated = [0]
-
         @functools.lru_cache(maxsize=None)
-        def select(index: int, selected: bool):
+        def select(index: int, selected: bool, calculated: int):
 
-            if calculated[0] == half:
+            if calculated == half:
                 return True
 
             if index == len(nums):
                 return False
             
             if selected:
-                calculated[0] += nums[index]
-                a = select(index + 1, True)
-                calculated[0] -= nums[index]
+                calculated += nums[index]
+                a = select(index + 1, True, calculated)
+                calculated -= nums[index]
                 
-                if a:
+                if a is True:
                     return True
                 
-                calculated[0] += nums[index]
-                b = select(index + 1, False)
-                calculated[0] -= nums[index]
-                return True if b else False
+                calculated += nums[index]
+                b = select(index + 1, False, calculated)
+                calculated -= nums[index]
+                return True if b is True else False
             else:
-                return select(index + 1, False) or select(index + 1, True)
+                return select(index + 1, False, calculated) or select(index + 1, True, calculated)
         
-        return select(0, True) or select(0, False)
+        return select(0, True, 0) or select(0, False, 0)
 
         
 # Test
