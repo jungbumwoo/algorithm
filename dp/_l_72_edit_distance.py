@@ -18,13 +18,14 @@ class Solution:
                 if i == 0:
                     dp[i][j] = j
                 
-                if j == 0:
+                elif j == 0:
                     dp[i][j] = i
-
-                if word1[i-1] == word2[j-1]:
-                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j] + 1, dp[i][j-1] + 1)
                 else:
-                    dp[i][j] = min(dp[i-1][j] + 1, dp[i][j-1] + 1)
+                    if word1[i-1] == word2[j-1]:
+                        dp[i][j] = min(dp[i-1][j-1], dp[i-1][j] + 1, dp[i][j-1] + 1)
+                    else:
+                        dp[i][j] = min(dp[i-1][j] + 1, dp[i][j-1] + 1)
+        print(dp)
         return dp[-1][-1]
 
 
