@@ -13,7 +13,7 @@ class Solution:
         g.sort()
 
         while queue:
-            cookie = queue.pop()
+            cookie = heapq.heappop(queue)
 
             if cookie >= g[index]:
                 cnt += 1
