@@ -4,10 +4,21 @@ import unittest
 
 # https://leetcode.com/problems/ones-and-zeroes
 
+'''
+오답노트
+a = 'aaaaa'
+
+# range [ )
+print(a.count('a')) # 5
+print(a.count('a', 0, len(a))) # 5
+print(a.count('a', 0, len(a) -1)) # 4
+
+print(a.count('aa')) # 2
+'''
 
 class Solution:
     def solve1(self, strs: List[str], m: int, n: int) -> List[int]:
-        # fixme
+        # Top Down
         cache = {}
         def dfs(i, m, n):
             if i == len(strs):
@@ -17,7 +28,7 @@ class Solution:
                 return cache[(i, m, n)]
 
             cache[(i, m, n)] = dfs(i+1, m, n)
-            zeros, ones = strs[i].count('0', 0, len(strs[i]) - 1), strs[i].count('1', 0, len(strs[i]) - 1)
+            zeros, ones = strs[i].count('0', 0, len(strs[i])), strs[i].count('1', 0, len(strs[i]))
             if m - zeros >= 0 and n - ones >= 0:
                 cache[(i, m, n)] = max(dfs(i+1, m - zeros, n - ones) + 1, cache[(i, m, n)])
 
