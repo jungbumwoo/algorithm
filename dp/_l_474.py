@@ -36,7 +36,35 @@ class Solution:
 
         return dfs(0, m, n)
 
+    def solve2(self, strs: List[str], m: int, n: int) -> List[int]:
+
+        '''
+        Bottom-up
         
+        3차원 배열 쓰는거나, defaultdict 활용하는걸 알게됨.
+        '''
+
+        from collections import defaultdict
+
+        cache = defaultdict(int)
+
+        for i in range(len(strs)):
+            s = strs[i]
+            for M in range(m + 1):
+                for N in range(n + 1):
+
+                    zeros, ones = s.count('0'), s.count('1')
+
+                    if M - zeros >= 0 and N - ones >= 0:
+                        cache[(i, M, N)] = max(
+                            cache[(i-1, M - zeros, N - ones)] + 1,
+                            cache[(i-1, M, N)]
+                        )
+                    else:
+                        cache[(i, M, N)] = cache[(i-1, M, N)]
+
+        return cache[(len(strs)-1, m, n)]
+
 # Test
 class TestSolution(unittest.TestCase):
     def test_solution(self):
@@ -68,7 +96,7 @@ class TestSolution(unittest.TestCase):
 
         solution = Solution()
         for c in cases:
-            actual = solution.solve1(strs=c.input.strs, m=c.input.m, n=c.input.n)
+            actual = solution.solve2(strs=c.input.strs, m=c.input.m, n=c.input.n)
 
             self.assertEqual(
                 c.expect,
