@@ -6,7 +6,8 @@ import unittest
 # https://leetcode.com/problems/restore-ip-addresses/
 
 '''
-fix me 
+오답노트
+0, '0' 타입 구분이 안됨 
 '''
 
 class Solution:
@@ -24,7 +25,7 @@ class Solution:
 
                 return 0
 
-            if cnt >= 2 and s[index] == 0:
+            if cnt >= 2 and s[index] == '0':
                 return
 
             new = int(s[index:index+cnt])
