@@ -5,6 +5,7 @@ import math
 from collections import defaultdict
 
 # FIXME: 시간초과
+# FIXME: bfs 처럼 변경했으나 여전히 timeout
 
 '''
 input
@@ -28,24 +29,30 @@ data = [INF] * (V + 1)
 
 for _ in range(E):
     u, v, w = map(int, sys.stdin.readline().split())
-    d[u].append([w, u, v])
+    d[u].append([w, v])
 
 queue = list()
 heapq.heapify(queue)
-data[K] = 0
 
 def enqueue(queue, s):
     for routes in d[s]:
         heapq.heappush(queue, routes)
 
-enqueue(queue, K)
+data[K] = 0
+heapq.heappush(queue, [0, K])
 while queue:
     route = heapq.heappop(queue)
-    weight, start, end = route[0], route[1], route[2]
+    weight, end = route[0], route[1]
 
-    if data[start] + weight < data[end]:
-        data[end] = data[start] + weight
-        enqueue(queue, end)
+    for next_point in d[end]:
+        next_w, next_e = next_point[0], next_point[1]
+
+        if next_w > data[next_e]:
+            continue
+
+        if next_w + data[end] < data[next_e]:
+            data[next_e] = next_w + data[end]
+            enqueue(queue, next_e)
 
 for i in range(1, len(data)):
     if data[i] == INF:
