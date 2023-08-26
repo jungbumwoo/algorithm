@@ -6,6 +6,7 @@ from collections import defaultdict
 
 # FIXME: 시간초과
 # FIXME: bfs 처럼 변경했으나 여전히 timeout
+# FIXME: visited 넣었더니 틀려버림
 
 '''
 input
@@ -26,6 +27,7 @@ K = int(sys.stdin.readline())
 
 d = defaultdict(list)
 data = [INF] * (V + 1)
+visited = [False] * (V + 1)
 
 for _ in range(E):
     u, v, w = map(int, sys.stdin.readline().split())
@@ -36,10 +38,12 @@ heapq.heapify(queue)
 
 def enqueue(queue, s):
     for routes in d[s]:
-        heapq.heappush(queue, routes)
+        if visited[routes[1]] is False:
+            heapq.heappush(queue, routes)
 
 data[K] = 0
 heapq.heappush(queue, [0, K])
+
 while queue:
     route = heapq.heappop(queue)
     weight, end = route[0], route[1]
@@ -53,6 +57,8 @@ while queue:
         if next_w + data[end] < data[next_e]:
             data[next_e] = next_w + data[end]
             enqueue(queue, next_e)
+
+    visited[end] = True
 
 for i in range(1, len(data)):
     if data[i] == INF:
