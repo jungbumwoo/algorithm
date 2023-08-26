@@ -36,29 +36,22 @@ for _ in range(E):
 queue = list()
 heapq.heapify(queue)
 
-def enqueue(queue, s):
-    for routes in d[s]:
-        if visited[routes[1]] is False:
-            heapq.heappush(queue, routes)
-
 data[K] = 0
 heapq.heappush(queue, [0, K])
 
 while queue:
     route = heapq.heappop(queue)
-    weight, end = route[0], route[1]
+    weight, now = route[0], route[1]
 
-    for next_point in d[end]:
+    if weight > data[now]:
+        continue
+
+    for next_point in d[now]:
         next_w, next_e = next_point[0], next_point[1]
-
-        if next_w > data[next_e]:
-            continue
-
-        if next_w + data[end] < data[next_e]:
-            data[next_e] = next_w + data[end]
-            enqueue(queue, next_e)
-
-    visited[end] = True
+        
+        if next_w + data[now] < data[next_e]:
+            data[next_e] = next_w + data[now]
+            heapq.heappush(queue, [next_w, next_e])
 
 for i in range(1, len(data)):
     if data[i] == INF:
