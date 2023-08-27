@@ -1,7 +1,7 @@
 import heapq
 import sys
 
-# fixme: Kruskal 로 풀다가 틀림
+# fix: 백준 이슈임. 코드 수정없이 실행하면 또 정답처리됨.
 
 '''
 input)
