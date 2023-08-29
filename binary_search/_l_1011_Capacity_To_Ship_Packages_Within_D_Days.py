@@ -27,23 +27,25 @@ class Solution:
         left, right = min(weights), sum(weights)
         ans = 0
 
-        while left < right:
+        while left <= right:
             m = (left + right) // 2
 
             cnt = 1
             temp = 0
+            print(left, right, m)
             for i in range(len(weights)):
                 if temp + weights[i] <= m:
                     temp += weights[i]
+                elif weights[i] > m:
+                    cnt = 5 * (10 ** 4) + 1
+                    break
                 else:
                     temp = weights[i]
                     cnt += 1
 
             if cnt > days:
                 left = m + 1
-            elif cnt < days:
-                right = m - 1
-            elif cnt == days:
+            else:
                 right = m - 1
                 ans = m
         
