@@ -27,65 +27,42 @@ ans)
 '''
 
 # fix: 이미 실패했던 경로라면 다시 visit 할 필요가 없다. 성공했다면 visit 불가능. pypy 통과
+# fix: python 도 통과. 재귀함수 중간에 return 되는 구조로 변경함
 
 R, C = map(int, sys.stdin.readline().split())
 
 data = [list(*sys.stdin.readline().rsplit()) for _ in range(R)]
 visited = [[-1] * C for _ in range(R)]
-connected = [-1] * R
 result = 0
 
-def right_above(i, n, m):
-    if n < 0 or m >= C:
-        return False
-    
-    if data[n][m] == 'x' or visited[n][m] >= 0:
-        return False
-    return True
-
-def right(i, p, q):
-    if q >= C:
-        return False
-    if data[p][q] == 'x' or visited[p][q] >= 0:
-        return False
-    return True
-
-def right_below(i, n, m):
-    if n >= R or m >= C:
-        return False
-    if data[n][m] == 'x' or visited[n][m] >= 0:
-        return False
-    return True
+d = [(-1, 1), (0, 1), (1, 1)]
 
 def find(i, p, q):
     global result
 
-    if connected[i] == i: # already connected
-        return
-
     if q == C -1: # arrived
         result += 1
-        connected[i] = i
-        return
+        return True
     
-    if right_above(i, p-1, q+1) and connected[i] != i:
-        visited[p-1][q+1] = i
-        find(i, p-1, q+1)
+    for direction in d:
+        new_x = p + direction[0]
+        new_y = q + direction[1]
 
-    if right(i, p, q+1) and connected[i] != i:
-        visited[p][q+1] = i
-        find(i, p, q+1)
+        if new_x < 0 or new_y < 0 or new_x >= R or new_y >= C:
+            continue
 
-    if right_below(i, p+1, q+1) and connected[i] != i:
-        visited[p+1][q+1] = i
-        find(i, p+1, q+1)
+        if visited[new_x][new_y] >= 0:
+            continue
 
+        if data[new_x][new_y] == 'x':
+            continue
+        
+        visited[new_x][new_y] = i
+        if find(i, new_x, new_y) is True:
+            return True
 
-def search(i):
-    find(i, i, 0)
-    return
 
 for i in range(R):
-    search(i)
+    find(i, i, 0)
 
 print(result)
