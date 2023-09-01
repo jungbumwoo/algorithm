@@ -3,7 +3,7 @@
 # fix: 예제는 맞았으나 틀린 case 발생
 
 import sys
-sys.setrecursionlimit(10 ** 7)
+# sys.setrecursionlimit(10 ** 7)
 
 N = int(sys.stdin.readline())
 
@@ -13,6 +13,12 @@ for _ in range(N):
     quests.append([s, i, p, False]) # STR, INT, POINT, IS_COMPLETED
 
 cache = {}
+
+def gen_points(r):
+    ans = []
+    for i in range(r + 1):
+        ans.append((i, r-i))
+    return ans
 
 def beat(j, k, bits):
     if (j, k, bits) in cache:
@@ -37,7 +43,13 @@ def beat(j, k, bits):
     if get_point == 0:
         return 0
     
-    new_cnt += max(beat(min(1000, j + get_point), k, bits), beat(j, min(1000, k + get_point), bits))
+    points = gen_points(get_point)
+
+    max_point = 0
+    for point in points:
+        max_point = max(max_point, beat(min(1000, j + point[0]), min(1000, k + point[1]), bits))
+
+    new_cnt += max_point
 
     for u in new_success:
         quests[u][3] = False
