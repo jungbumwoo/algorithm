@@ -26,6 +26,8 @@ ans)
 5
 '''
 
+# fix: 이미 실패했던 경로라면 다시 visit 할 필요가 없다. 성공했다면 visit 불가능. pypy 통과
+
 R, C = map(int, sys.stdin.readline().split())
 
 data = [list(*sys.stdin.readline().rsplit()) for _ in range(R)]
@@ -65,27 +67,19 @@ def find(i, p, q):
         result += 1
         connected[i] = i
         return
-
+    
     if right_above(i, p-1, q+1) and connected[i] != i:
         visited[p-1][q+1] = i
         find(i, p-1, q+1)
-
-        if connected[i] != i:
-            visited[p-1][q+1] = -1
 
     if right(i, p, q+1) and connected[i] != i:
         visited[p][q+1] = i
         find(i, p, q+1)
 
-        if connected[i] != i:
-            visited[p][q+1] = -1
-
     if right_below(i, p+1, q+1) and connected[i] != i:
         visited[p+1][q+1] = i
         find(i, p+1, q+1)
 
-        if connected[i] != i:
-            visited[p+1][q+1] = -1
 
 def search(i):
     find(i, i, 0)
