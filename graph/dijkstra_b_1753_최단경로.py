@@ -45,7 +45,7 @@ while queue:
             next_cost, next_arrive = route[0], route[1]
 
             if weight + next_cost < cost[next_arrive]:
-                heapq.heappush(queue, (next_cost, next_arrive))
+                heapq.heappush(queue, (weight + next_cost, next_arrive))
 
 for k in range(1, len(cost)):
     if cost[k] == math.inf:
