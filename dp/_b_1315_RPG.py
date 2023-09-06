@@ -1,6 +1,6 @@
 # https://www.acmicpc.net/problem/1315
 
-# fix: 예제는 맞았으나 틀린 case 발생
+# fix: timeout 발생함
 
 import sys
 # sys.setrecursionlimit(10 ** 7)
