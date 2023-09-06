@@ -1,5 +1,22 @@
 # https://www.acmicpc.net/problem/2217
 
+'''
+처음 틀렸던 것 반례 (끝까지 다 확인해봐야하는 이유)
+input)
+5
+2
+3
+4
+5
+11
+
+output)
+11
+
+ans)
+12
+'''
+
 import sys
 
 N = int(sys.stdin.readline())
