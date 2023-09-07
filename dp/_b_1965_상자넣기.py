@@ -1,4 +1,7 @@
 import sys
+sys.setrecursionlimit(10 ** 7)
+
+# bottom - up 으로 다시 풀어보기 
 
 '''
 5
@@ -18,7 +21,7 @@ def select(index, weight):
         return cache[(index, weight)]
 
     a, b = 0, 0
-    if data[index] < weight:
+    if data[index] > weight:
         # selected
         a = select(index + 1, data[index]) + 1
 
@@ -29,6 +32,4 @@ def select(index, weight):
     cache[(index, weight)] = ans
     return ans
 
-# print(select(0, 0))
-# print(select(0, 10 ** 7))
-print()
+print(select(0, 0))
