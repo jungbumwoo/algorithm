@@ -17,6 +17,7 @@ def down_bit(bits, value):
 
 @functools.lru_cache(maxsize=None)
 def select(index, value, bits):
+    # print(index, value, bits)
     global flag
 
     if index == N:
@@ -37,7 +38,7 @@ def select(index, value, bits):
         bits = up_bit(bits, value+1)
         ans += select(index+1, value+1, bits)
         bits = down_bit(bits, value+1)
-        
+
         bits = up_bit(bits, value-1)
         ans += select(index+1, value-1, bits)
         bits = down_bit(bits, value-1)
@@ -45,6 +46,8 @@ def select(index, value, bits):
     return ans
 
 result = 0
-for k in range(1, 9):
+for k in range(1, 10):
     result += select(0, k, 1 << k)
+
+result = result % 1000000000
 print(result)
