@@ -1,5 +1,10 @@
 # https://www.acmicpc.net/problem/1562
 
+'''
+1. bit visited 처리 시 bit 특성 상 이전 방문내역까지 지워져버리는 문제 캐치하지 못함
+2. dfs return 조건인 index 처리 틀림
+'''
+
 import sys
 import functools
 
@@ -11,38 +16,29 @@ def up_bit(bits, value):
     mask = 1 << value
     return mask | bits
 
-def down_bit(bits, value):
-    mask = ~(1 << value)
-    return mask & bits
-
 @functools.lru_cache(maxsize=None)
 def select(index, value, bits):
-    # print(index, value, bits)
     global flag
 
-    if index == N:
+    if index == N - 1:
         if bits == flag:
             return 1
         return 0
 
     ans = 0
     if value == 9:
-        bits = up_bit(bits, value-1)
-        ans += select(index+1, value-1, bits)
-        bits = down_bit(bits, value-1)
+        next_bit = up_bit(bits, value-1)
+        ans += select(index+1, value-1, next_bit)
     elif value == 0:
-        bits = up_bit(bits, value+1)
-        ans += select(index+1, value+1, bits)
-        bits = down_bit(bits, value+1)
+        next_bit = up_bit(bits, value+1)
+        ans += select(index+1, value+1, next_bit)
     else:
-        bits = up_bit(bits, value+1)
-        ans += select(index+1, value+1, bits)
-        bits = down_bit(bits, value+1)
-
-        bits = up_bit(bits, value-1)
-        ans += select(index+1, value-1, bits)
-        bits = down_bit(bits, value-1)
+        next_bit = up_bit(bits, value+1)
+        ans += select(index+1, value+1, next_bit)
         
+        next_bit = up_bit(bits, value-1)
+        ans += select(index+1, value-1, next_bit)
+
     return ans
 
 result = 0
