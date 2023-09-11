@@ -65,7 +65,7 @@ for i in range(1, N + 1):
         ans += truck[i]
         del truck[i]
 
-    # 담기
+    # 신규집하
     for k in range(len(data[i])):
         arrive, count = data[i][k][0], data[i][k][1]
 
@@ -74,7 +74,7 @@ for i in range(1, N + 1):
         else:
             truck[arrive] = count
 
-    # 무게초과 난거 버려
+    # 무게초과 난건 버려
     is_done = False
     spare = C
     for key, value in sorted(truck.items()):
