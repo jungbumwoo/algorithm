@@ -23,6 +23,24 @@ class Solution:
 
         return max(data[-1][0], data[-1][1], nums[-1])
 
+# 푼 기억이 없어서 풀었는데 더 잘풀었다.
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        
+        data = [0] * len(nums)
+        data[0] = nums[0]
+        ans = nums[0]
+        for i in range(1, len(nums)):
+            if data[i-1] <= 0:
+                data[i] = nums[i]
+            else:
+                data[i] = data[i-1] + nums[i]
+            
+            ans = max(ans, data[i])
+        
+        return ans
+                
+
         
 # Test
 class TestSolution(unittest.TestCase):
