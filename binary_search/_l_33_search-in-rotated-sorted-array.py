@@ -5,6 +5,14 @@ counter example
 nums = [1], target = 1
 ans = 0
 output = 1
+
+if 등호 사용 잘못하였음
+---------------------------------------
+
+nums = [3, 5, 1], target = 3
+ans = 0
+output = -1
+
 '''
 
 class Solution:
@@ -28,7 +36,7 @@ class Solution:
             # nums = [4,5,6,7,0,1,2], target = 3
 
             # l > r ? poissble?
-            if not left < right:
+            if not left <= right:
                 return False
 
             if nums[left] < nums[right]:
