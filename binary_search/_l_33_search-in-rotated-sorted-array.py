@@ -13,6 +13,10 @@ nums = [3, 5, 1], target = 3
 ans = 0
 output = -1
 
+return type error
+
+-------------------------------------
+
 '''
 
 class Solution:
@@ -46,22 +50,22 @@ class Solution:
 
             if nums[left] < nums[mid]:
                 temp = get_target(left, mid, target)
-                if temp:
+                if temp is not False:
                     return temp
 
             if nums[mid] < nums[right]:
                 temp = get_target(right, mid, target)
-                if temp:
+                if temp is not False:
                     return temp
 
             if nums[mid] == target:
                 return mid
 
             a = select(left, mid-1, target)
-            if a:
+            if a is not False:
                 return a
             b = select(mid +1, right, target)
-            if b:
+            if b is not False:
                 return b
 
             return False
