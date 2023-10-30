@@ -16,7 +16,7 @@ class Solution:
         # Time Complexity : O(n)
         # Space Complexity : O(n)
         data = dict()
-        ans = 1
+        ans = 0
 
         for i in range(len(nums)):
 
@@ -81,6 +81,11 @@ class TestSolution(unittest.TestCase):
                 name="test 3",
                 input=Args(nums = [100,4,200,1,3,2,6,7,8,10,11,9,5]),
                 expect=11
+            ),
+            TestCase(
+                name="test 4",
+                input=Args(nums = []),
+                expect=0
             ),
         ]
 
