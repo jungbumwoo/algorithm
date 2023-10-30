@@ -29,27 +29,28 @@ class Solution:
 
             if num not in data:
                 if big in data and small in data:
-                    data[small][1] = data[big][1]
-                    data[big][0] = data[small][0]
+                    data[data[small][0]][1] = data[big][1]
+                    data[data[big][1]][0] = data[small][0]
                     ans = max(data[big][1] - data[small][0] + 1, ans)
 
                     data[num] = [data[small][0], data[big][1]]
-                    continue
-                if big in data:
+                elif big in data:
                     data[big][0] = num
                     data[num] = [num, data[big][1]]
                     ans = max(data[big][1] - num + 1, ans)
-                    continue
-                if small in data:
+                elif small in data:
                     data[small][1] = num
                     data[num] = [data[small][0], num]
                     ans = max(num - data[small][0] + 1, ans)
-                    continue
-                
-                data[num] = [num, num] # min, max
+                else:  # (if, continue) is hard to debug. so change to if, elif, else
+                    data[num] = [num, num] # min, max
         
         return ans
 
+
+'''
+comment: when update window, find the correct point that need to be updated
+'''
 
         
 # Test
