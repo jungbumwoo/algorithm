@@ -15,8 +15,11 @@ class Solution:
     def solve(self, nums: List[int]) -> List[int]:
         # Time Complexity : O(n)
         # Space Complexity : O(n)
+        if len(nums) == 0:
+            return 0
+
         data = dict()
-        ans = 0
+        ans = 1
 
         for i in range(len(nums)):
 
@@ -44,12 +47,14 @@ class Solution:
                     ans = max(num - data[small][0] + 1, ans)
                 else:  # (if, continue) is hard to debug. so change to if, elif, else
                     data[num] = [num, num] # min, max
+                    # ans = ans(1, ans), if exception handling is not included (len == 0 case)
         
         return ans
 
 
 '''
 comment: when update window, find the correct point that need to be updated
+comment2: when input size is, 0
 '''
 
         
@@ -86,6 +91,11 @@ class TestSolution(unittest.TestCase):
                 name="test 4",
                 input=Args(nums = []),
                 expect=0
+            ),
+            TestCase(
+                name="test 5",
+                input=Args(nums=[0]),
+                expect=1,
             ),
         ]
 
