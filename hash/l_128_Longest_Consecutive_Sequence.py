@@ -25,10 +25,7 @@ class Solution:
 
             num = nums[i]
             big = nums[i] + 1
-            small = nums[i] - 1
-
-            if small == -1:
-                small = 0
+            small = nums[i] - 1 
 
             if num not in data:
                 if big in data and small in data:
@@ -96,6 +93,11 @@ class TestSolution(unittest.TestCase):
                 name="test 5",
                 input=Args(nums=[0]),
                 expect=1,
+            ),
+            TestCase(
+                name="test 6",
+                input=Args(nums =[-1,1,0]),
+                expect=3
             ),
         ]
 
