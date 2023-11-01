@@ -19,13 +19,29 @@ class Solution:
             return True
 
         already = False
+        at_least = nums[0]
+
         for i in range(1, len(nums)):
-            if nums[i-1] > nums[i]:
+            if nums[i] >= nums[i-1] and nums[i] >= at_least:
+                continue
+            elif nums[i] < nums[i-1]:
                 if already is False:
                     already = True
                 elif already is True:
                     return False
+            elif nums[i] < at_least:
+                if already is False:
+                    already = True
+                elif already is True:
+                    return False
+            else:
+                at_least = nums[i]
+
         return True
+
+'''
+added condition, but failed to check initial status.
+'''
 
         
 # Test
