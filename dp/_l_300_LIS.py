@@ -14,8 +14,23 @@ subsequence
 '''
 
 class Solution:
-    # Memory Limit Exceeded
     def solve(self, nums: List[int]) -> bool:
+        # Time Complexity : O(n^2) 
+        # Space Complexity : O(n)
+        data = [1] * len(nums)
+        ans = 1
+        for i in range(len(nums)-1, -1, -1):
+            maxi = 1
+            for j in range(i + 1, len(nums)):
+                if nums[i] < nums[j]:
+                    maxi = max(maxi, data[j] + 1)
+            data[i] = maxi 
+            ans = max(data[i], ans)
+        return ans
+
+
+    # Memory Limit Exceeded -> lru_cache 라이브러리 안쓰고 직접 만들어쓰면 괜찮을 수도
+    def solve1(self, nums: List[int]) -> bool:
         constraint_min = - (10 ** 4) - 1
         @lru_cache(maxsize=None)
         def select(i, before_picked):
