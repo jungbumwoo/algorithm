@@ -15,13 +15,16 @@ class Solution:
     def solve(self, nums: List[int]) -> bool:
         # Time Complexity : O(n) 
         # Space Complexity : O(1)
-        if len(nums) == 1:
+        if len(nums) <= 2:
             return True
-
         already = False
         at_least = nums[0]
 
-        for i in range(1, len(nums)):
+        if nums[0] > nums[1]:
+            already = True
+            at_least = nums[1]
+
+        for i in range(2, len(nums)):
             if nums[i] >= nums[i-1] and nums[i] >= at_least:
                 continue
             elif nums[i] < nums[i-1]:

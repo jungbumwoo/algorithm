@@ -16,7 +16,8 @@ Return the length of the longest substring containing the same letter you can ge
 class Solution:
     def solve(self, s: str, k: int) -> List[int]:
         # Time Complexity :  
-        # Space Complexity : 
+        # Space Complexity :
+        ''' 
         inital_window_size = k + 1 # 바꾸는 수 (k) + 최소 하나 (1)
 
         l, r = 0, 0 + inital_window_size - 1
@@ -33,6 +34,9 @@ class Solution:
         
         window_size = k + max_exists
         search_end_point = len(s) - window_size
+        '''
+
+        window_size = k + 1
 
         def search(index, size, k):
             temp = {}
@@ -53,7 +57,8 @@ class Solution:
             return max_exists + k
 
 
-        for i in range(0, search_end_point):
+        # for i in range(0, search_end_point):
+        for i in range(0, len(s)):
             print(f"i: {i}, window_size: {window_size}")
             new_window_size = search(i, window_size, k)
             while new_window_size > window_size:

@@ -1,6 +1,7 @@
 # https://www.acmicpc.net/problem/14502
 # 연구소
 
+import copy
 import sys
 from itertools import combinations
 '''
@@ -38,10 +39,15 @@ from itertools import combinations
 3
 '''
 
+'''
+2-dimension array copy issue.
+'''
+
+
 M, N = map(int, sys.stdin.readline().split())
 data = [list(map(int, sys.stdin.readline().split())) for _ in range(M)]
 
-print(f"initial data: {data}")
+# print(f"initial data: {data}")
 
 empty = []
 virous = []
@@ -86,17 +92,17 @@ def play(board, virous):
             ans += mark(board, nx, ny)
     return ans
 
-initial_count = play(data[:], virous)
+initial_count = play(copy.deepcopy(data), virous)
 answer = 0
 for combi in combinations([t for t in range(len(empty))], 3):
-
+    
+    board = copy.deepcopy(data)
     for c in combi:
-        board = data[:]
         board[empty[c][0]][empty[c][1]] = 1
 
-        new_game_count = play(board, virous)
-        diff = initial_count - new_game_count
+    new_game_count = play(board, virous)
+    diff = initial_count - new_game_count - 3
 
-        answer = max(new_game_count, answer)
-
+    if diff > answer:
+        answer = diff
 print(answer)
