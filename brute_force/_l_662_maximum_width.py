@@ -4,6 +4,8 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+# fixme 1.
 class Solution:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         
@@ -26,4 +28,26 @@ class Solution:
         
         search(root, 0, 1)
         return ans
+
+# fixme 2.
+class Solution:
+    def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        
+        data = {}
+        ans = [0]
+
+        def search(node, level, index):
+            if node is None:
+                return
             
+            if level not in data:
+                data[level] = index
+            else:
+                ans[0] = index - data[level] + 1
+            
+            search(node.left, level + 1, 2 * index - 1)
+            search(node.right, level + 1, 2 * index)
+        
+        search(root, 0, 1)
+        return ans[0]
+                        
