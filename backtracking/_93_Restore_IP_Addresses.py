@@ -6,9 +6,8 @@ class Solution:
 
         def select(s, i, n):
             if n == 5:
-                ans.append(".".join(stack))
-                return
-            if i >= len(s):
+                if i == len(s):
+                    ans.append(".".join(stack))
                 return
 
             for k in range(1,4):
