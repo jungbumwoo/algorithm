@@ -1,7 +1,7 @@
 class Solution:
     direction = 0
-    dx = [1, 0, -1, 0]
-    dy = [0, 1, 0, -1]
+    dx = [0, 1, 0, -1]
+    dy = [1, 0, -1, 0]
 
     def get_next_direction(self):
         self.direction = (self.direction + 1) % 4
@@ -11,8 +11,8 @@ class Solution:
         result = [[0] * n for _ in range(n)]
 
         x, y = 0, 0
-        for i in range(1, n+1):
-
+        N = n*n
+        for i in range(1, N + 1):
             result[x][y] = i
 
             nx = x + self.dx[self.direction]
@@ -25,3 +25,5 @@ class Solution:
             x, y = nx, ny
 
         return result
+
+    
