@@ -1,3 +1,5 @@
+# 다시 풀고 다른 사람 풀이도 찾아볼 것.
+
 class Solution:
     def nextGreatestLetter(self, letters: List[str], target: str) -> str:
 
@@ -6,7 +8,7 @@ class Solution:
 
         is_not_exist = True
         for letter in letters:
-            if ord(letter) > ascii_target and ord(letter) < ascii_max:
+            if ord(letter) > ascii_target and ord(letter) <= ascii_max:
                 ascii_max = ord(letter)
                 is_not_exist = False
         
