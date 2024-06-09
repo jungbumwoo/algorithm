@@ -25,8 +25,7 @@ class Solution:
         return ans
 
     def dfs(self, s: str, cache: dict, stack):
-        print(f's: {s}, cache: {cache}, stack: {stack}')
-        if len(cache) == 2 ** len(s) - 1:
+        if len(cache) == 2 ** len(s):
             return True, stack[:]
 
         if s in cache:
@@ -46,7 +45,7 @@ class Solution:
                 return ok, result
             
             stack.pop()
-            del cache[new]
+            del cache[s]
         
         return False, None
 
@@ -74,11 +73,6 @@ class TestSolution(unittest.TestCase):
                 input=Args(n = 2),
                 expect=[0, 2, 3, 1],
             ),
-            # TestCase(
-            #     name="test 3",
-            #     input=Args(n = 3),
-            #     expect=False
-            # ),
         ]
 
         solution = Solution()
