@@ -1,3 +1,9 @@
+'''
+fixed case:
+
+ax1: 0, ax2: 0, ax3: 0, ax4: 0
+'''
+
 class Solution:
     def computeArea(self, ax1: int, ay1: int, ax2: int, ay2: int, bx1: int, by1: int, bx2: int, by2: int) -> int:
 
@@ -14,11 +20,14 @@ class Solution:
             return 0
         
         if a1 <= b1 and b2 <= a2:
+            if b2 == b1:
+                return 0
             return abs(b2 - b1)
         
         if b1 <= a1 and a2 <= b2:
+            if a2 == a1:
+                return 0
             return abs(b2 - a1)
-
         if a2 >= b2:
             return abs(b2 - a1)
         
