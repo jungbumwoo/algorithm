@@ -17,13 +17,13 @@ class Solution:
             return 0
 
         left, right = 0, len(candidates) - 1
-        mid = None
         while left <= right:
             mid = (left + right) // 2
 
-            if candidates[mid] <= target:
+            if candidates[mid] >= target:
                 right = mid - 1
             else:
                 left = mid + 1
 
-        return len(candidates) - mid
+        return right + 1
+        
