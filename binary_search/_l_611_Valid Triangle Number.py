@@ -1,3 +1,7 @@
+'''
+시간 복잡도 개선 필요
+'''
+
 class Solution:
     def triangleNumber(self, nums: List[int]) -> int:
         
