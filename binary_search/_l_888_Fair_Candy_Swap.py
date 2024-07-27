@@ -1,3 +1,7 @@
+'''
+시간 복잡도 개선 가능
+'''
+
 class Solution:
     def fairCandySwap(self, aliceSizes: List[int], bobSizes: List[int]) -> List[int]:
         
