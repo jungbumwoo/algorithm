@@ -1,4 +1,3 @@
-# fixme
 class Solution:
     def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
         data = []
@@ -6,6 +5,7 @@ class Solution:
             data.append((difficulty[i], profit[i]))
         
         data.sort()
+        difficulty.sort()
 
         cache = [0] * len(data)
         cache[0] = data[0][1]
@@ -23,10 +23,10 @@ class Solution:
         
         while left < right:
             mid = (left + right) // 2
-            
             if w >= difficulty[mid]:
                 left = mid + 1
             else:
                 right = mid
-        return cache[left]
-                
+        
+        index = left - 1 if left -1 >= 0 else left
+        return cache[index] if difficulty[index] <= w else 0               
