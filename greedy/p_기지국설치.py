@@ -3,7 +3,7 @@ from typing import List
 import unittest
 
 
-# https://leetcode.com/problems/word-break
+# https://school.programmers.co.kr/learn/courses/30/lessons/12979
 
 '''
 description
