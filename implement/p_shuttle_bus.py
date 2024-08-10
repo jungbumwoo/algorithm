@@ -12,19 +12,20 @@ description
 class Solution:
     def solution(self, n, t, m, timetable):
         arr = []
-        
-        max_arrive = 9 * 60 + int(n) * int(t)
+    
+        max_arrive = 9 * 60 + int(n-1) * int(t)
         
         for time in timetable:
-            h, m = time.split(":")
-            if int(h) * 60 + int(m) <= max_arrive:
-                arr.append(int(h) * 60 + int(m))
+            hour, minute = time.split(":")
+            if int(hour) * 60 + int(minute) <= max_arrive:
+                arr.append(int(hour) * 60 + int(minute))
 
-        sorted(arr)
-        arrive = 9 * 60
-        index = self.get_index(n, m, t, arrive, arr)
-        
-        if index == len(arr) - 1:
+        arr = sorted(arr)
+        index, is_last_bus_full = self._get_bus_status(n, m, t, arr)
+
+        if index >= 0 and index == len(arr) -1 and not is_last_bus_full: # 다 태웠는데 마지막 버스 여력 있음
+            should = max_arrive
+        elif is_last_bus_full:
             should = arr[index] - 1
         else:
             should = max_arrive
@@ -43,6 +44,23 @@ class Solution:
         else:
             m = str(m)
         return h + ':' + m
+
+    def _get_bus_status(self, n, m, t, arr):
+        index = -1
+        arrive = 9 * 60 - t
+        last_bus_cnt = 0        
+        for b in range(1, n + 1):
+            arrive += int(t)
+            
+            for _ in range(int(m)):
+                if index + 1 <= len(arr) - 1 and arr[index + 1] <= arrive:
+                    index += 1
+                    if b == n:
+                        last_bus_cnt += 1                        
+                else:
+                    break
+        return index, last_bus_cnt == m
+    
     
         
 # Test
@@ -62,11 +80,11 @@ class TestSolution(unittest.TestCase):
             expect: int
 
         cases = [
-            # TestCase(
-            #     name="test 1",
-            #     input=Args(n=1, t=1, m=5, timetable=["08:00", "08:01", "08:02", "08:03"]),
-            #     expect="09:00"
-            # ),
+            TestCase(
+                name="test 1",
+                input=Args(n=1, t=1, m=5, timetable=["08:00", "08:01", "08:02", "08:03"]),
+                expect="09:00"
+            ),
             TestCase(
                 name="test 2",
                 input=Args(n=2, t=10, m=2, timetable=["09:10", "09:09", "08:00"]),
