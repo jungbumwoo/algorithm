@@ -6,7 +6,7 @@ import unittest
 # https://school.programmers.co.kr/learn/courses/30/lessons/17678
 
 '''
-description
+상황 정의를 확실하게 하고 문제를 풀었어야함
 '''
 
 class Solution:
@@ -21,15 +21,13 @@ class Solution:
                 arr.append(int(hour) * 60 + int(minute))
 
         arr = sorted(arr)
+        
         index, is_last_bus_full = self._get_bus_status(n, m, t, arr)
-
-        if index >= 0 and index == len(arr) -1 and not is_last_bus_full: # 다 태웠는데 마지막 버스 여력 있음
-            should = max_arrive
-        elif is_last_bus_full:
+        if is_last_bus_full:
             should = arr[index] - 1
         else:
             should = max_arrive
-        
+
         if should >= 24 * 60:
             return "23:59"    
         
