@@ -1,0 +1,24 @@
+class Solution:
+    def successfulPairs(self, spells: List[int], potions: List[int], success: int) -> List[int]:
+        
+        potions = sorted(potions)
+        result = []
+        for s in spells:
+            target = success / s
+            idx = self.find_index(target, potions)
+            result.append(len(potions) - idx)
+        return result
+
+    def find_index(self, target: float, potions: List[int]):
+        left, right = 0, len(potions)
+        
+        while left < right:
+            mid = (left + right) // 2
+
+            if potions[mid] >= target:
+                right = mid
+            else:
+                left = mid + 1
+        return left
+
+
