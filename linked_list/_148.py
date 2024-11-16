@@ -15,10 +15,10 @@ class ListNode:
 
 
 class Solution:
+    # binary search
     def solve(self, head: Optional[ListNode]) -> Optional[ListNode]:
         dummy = ListNode(val=-1*(10 ** 6))
         data = [(-1*(10 ** 6), dummy)]
-        dummy.next = head
 
         while head:
             l, r = 0, len(data) - 1
@@ -26,12 +26,11 @@ class Solution:
                 mid = (l + r) // 2
                 current = data[mid][1]
                 current_val = data[mid][0]
-                print(f"l: {l}, r: {r}, mid:{mid}")
 
-                if head.val > current_val and (current.next is None or head.val <= current.next.val):
+                if head.val == current_val or (head.val > current_val and (current.next is None or head.val <= current.next.val)):
                     next_ = head.next
                     head.next = current.next
-                    # current.next = head
+                    current.next = head
 
                     data_left = data[:mid+1]
                     data_right = data[mid+1:]
@@ -40,9 +39,30 @@ class Solution:
                     
                     head = next_
                     break
+                elif head.val > current.val:
+                    l = mid + 1
                 else:
-                    r = mid - 1
-            
+                    r = mid
+
+        return self.convertOutput(dummy.next)
+
+    # Time Limit Exceeded
+    def solve_first(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(val=-1*(10 ** 6))
+
+        while head:
+            current = dummy
+            while current:
+                if head.val >= current.val and (current.next is None or head.val <= current.next.val):
+                    next_ = head.next
+                    head.next = current.next
+                    current.next = head
+                    
+                    head = next_
+                    break
+                    
+                current = current.next
+        
         return self.convertOutput(dummy.next)
     
         
@@ -52,6 +72,8 @@ class Solution:
             r.append(output.val)
             output = output.next
         return r
+    
+
 
 # Test
 class TestSolution(unittest.TestCase):
@@ -82,12 +104,12 @@ class TestSolution(unittest.TestCase):
             TestCase(
                 name="test 1",
                 input=Args(head = self.generate_input([4,2,1,3])),
-                expect=[1,2,5]
+                expect=[1,2,3,4]
             ),
             TestCase(
                 name="test 2",
                 input=Args(head = self.generate_input([-1,5,3,4,0])),
-                expect=[2,3]
+                expect=[-1,0,3,4,5]
             ),
             TestCase(
                 name="test 2",
